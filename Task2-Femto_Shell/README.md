@@ -1,44 +1,50 @@
 # WAFDUNIX Shell
 
-WAFDUNIX Shell is a simple Unix-like shell implemented in C, allowing users to enter commands and execute them. This README.md file provides an overview of the code structure and functionalities.
+This is a simple shell program written in C. The shell provides a basic command-line interface where users can input commands, and the shell will display a message accordingly.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Usage](#usage)
-- [Functions](#functions)
+- [Building](#building)
+- [Sample video](#video)
 
 ## Introduction
 
-WAFDUNIX Shell is a basic command-line shell that initializes and prompts the user for commands. It takes input, parses it, and then executes the corresponding actions. The shell will continue running until the user inputs the "exit" command.
+The WAFDUNIX Shell is a minimalistic command-line interface implemented in C. It initializes a simple shell environment and waits for user input. Users can input commands, and the shell will respond accordingly.
 
 ## Features
 
-- User-friendly prompt.
-- Basic command parsing.
-- Execution of commands.
-- Graceful exit with the "exit" command.
+- **Command Input:** Users can input commands in the shell.
+- **Exit:** The shell can be terminated by typing "exit" at the prompt.
 
 ## Usage
 
-To use the WAFDUNIX Shell, simply compile the C code and run the executable. The shell will prompt the user to enter commands, and it will execute them accordingly. To exit the shell, type "exit."
+
+1. Build the executable:
+
+    ```bash
+    gcc wafdunix_shell.c -o wafdunix_shell
+    ```
+
+2. Run the shell:
+
+    ```bash
+    ./wafdunix_shell
+    ```
+
+3. The shell will display a welcome message, and the user can input commands.
+
+## Building
+
+To build the WAFDUNIX Shell, make sure you have a C compiler installed. Use the following command:
 
 ```bash
-$ gcc wafdunix_shell.c -o wafdunix_shell
-$ ./wafdunix_shell
+gcc wafdunix_shell.c -o wafdunix_shell
 ```
 
-## Functions
+##video
+	
 
-### `initialize_shell()`
 
-This function initializes the WAFDUNIX Shell, displaying a welcome message and clearing the terminal screen.
-
-### `getInput(char buf[100])`
-
-This function takes user input as a string (`buf`) and tokenizes it using space as the delimiter. The tokens are stored in the `argv` array for further processing.
-
-### `main()`
-
-The main function of the WAFDUNIX Shell. It calls `initialize_shell()` to set up the shell, then enters a loop to continuously prompt the user for input. It uses `getInput()` to parse the input and checks for the "exit" command to terminate the shell.
