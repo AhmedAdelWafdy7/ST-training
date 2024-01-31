@@ -44,7 +44,6 @@ To build the WAFDUNIX Shell, make sure you have a C compiler installed. Use the 
 gcc wafdunix_shell.c -o wafdunix_shell
 ```
 
-##video
-	
+## video
 
-
+https://github.com/AhmedAdelWafdy7/ST-training/assets/107740350/2a66fbf9-e7d5-4c55-bcda-283bc43e8ef0
