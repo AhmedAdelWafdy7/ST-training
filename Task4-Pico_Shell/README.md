@@ -107,3 +107,7 @@ int main() {
 - Basic shell commands: `cd`, `cp`, `mv`, `echo`, `pwd`, and `exit`.
 - Executes external commands using `execvp`.
 - Supports basic input/output redirection.
+
+
+https://github.com/AhmedAdelWafdy7/ST-training/assets/107740350/0213ed14-cb2f-4e39-bcea-b2eb9542f13a
+
