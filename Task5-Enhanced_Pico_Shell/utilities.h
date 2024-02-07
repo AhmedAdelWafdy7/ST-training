@@ -28,3 +28,4 @@
 	int setenv (const char *name,const char *value,int overwrite);
 	int unsetenv(const char *name);
 	void show_environ();
+	void redirection(const char *file);

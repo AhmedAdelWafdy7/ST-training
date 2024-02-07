@@ -1,6 +1,7 @@
 #include "utilities.h"
 int argc = 0;
 char buf[100];
+void free_argv();
 int main(){
         intialize_shell();
         while(1){
@@ -8,12 +9,52 @@ int main(){
                 fgets(buf,100,stdin);
                 int len =strlen(buf);
                 buf[len-1]=0;
-                argc =  getInput(buf,&argv);
-                if(strcmp(argv[0],"exit")==0)
-                        {
+                argc = getInput(buf,&argv);
+		pid_t pid;
+
+		for (int i = 0; i < argc; i++) {
+        		if (argc > 2 && (strcmp(argv[i], ">") == 0 || strcmp(argv[i], ">>") == 0) ) {
+				redirection(argv[i + 1]);
+				argv[i] = NULL;
+			}
+			int pid = fork();
+  		if (pid == -1) {
+    			perror("fork");
+    			exit(EXIT_FAILURE);
+  		}
+
+  			if (pid == 0) {
+    		// Child process (executes ls)
+    		//	execvp("ls", argv);
+    		//	perror("execvp");
+    			exit(EXIT_FAILURE);
+  		} else {
+    // Parent process
+    			wait(NULL);
+  		}
+		}
+		if(strcmp(argv[0],"exit")==0)
+                {
                                 printf("Good bye :)\n$");
                                 break;     //breaking the shell
-                        }
+                }
+		else if(strcmp(argv[0],"mkdir")==0){
+			if (mkdir(argv[1], 0755) == -1) {
+    				perror("mkdir");
+  			}
+		}
+		else if (strcmp(argv[0],"rm")==0){
+			if(strcmp(argv[1],"-r")==0){
+				if (rmdir(argv[2]) == -1) {
+                                	perror("rmdir");
+                        	}
+			}
+			else{
+				if (remove(argv[1]) == -1) {
+                                        perror("rm");
+                                }
+			}	
+		}
                 else if(strcmp(argv[0] ,"cd")==0){
 			if(argc > 1){
 				chdir(argv[1]);
@@ -103,11 +144,21 @@ int main(){
                                execute_command(argv);
                         }
 
-        	for (int i = 0; i < argc; i++) {
+	       for (int i = 0; i < argc; i++) {
             		free(argv[i]);
         	}
         	free(argv);
         	argv = NULL;
-	}
-}
 
+	}
+}	
+
+void free_argv() {
+    if (argv != NULL) {
+        for (int i = 0; argv[i] != NULL; i++) {
+            free(argv[i]);
+        }
+        free(argv);
+        argv = NULL;
+    }
+}

@@ -47,6 +47,7 @@ int getInput(char buf[100], char ***argv) {
     return count;
 }
 
+
 void echo(char buf[100]){
          char *token = strtok(buf, " ");
    // loop through the string to extract all other tokens
@@ -176,3 +177,15 @@ void show_environment() {
     }
 }
 
+void redirection(const char *file) {
+  int fd = open(file, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IWOTH);
+  if (fd == -1) {
+    perror("open");
+    exit(EXIT_FAILURE);
+  }
+  if (dup2(fd, STDOUT_FILENO) == -1) {
+    perror("dup2");
+    exit(EXIT_FAILURE);
+  }
+  close(fd); // Ensure file closing even in case of errors
+}
