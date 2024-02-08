@@ -1,109 +1,50 @@
 # Wafdunix Picoshell
 
-Wafdunix Picoshell is a simple Unix shell implementation consisting of three main files: `main.c`, `utilities.c`, and `utilities.h`. This minimalistic shell provides basic functionalities such as executing commands, changing directories, copying files, moving files, echoing input, and printing the current working directory.
 
-## File Descriptions
-
-### utilities.h
-
-```c
-/* -------------------- includes------------------------ */
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<sys/types.h>
-#include<sys/stat.h>
-#include<fcntl.h>
-#include<unistd.h>
-#include<sys/wait.h>
-
-/*-----------------------------macro functions declaration------------------------------*/
-#define clear() printf("\033[H\033[J")
-
-/* ------------------------------Data Types Declaration ------------------------------- */
-int x, result;
-char buf[100];
-int read_count;
-char *argv[] = { NULL };
-
-/*------------------------------functions declaration-------------------------*/
-void initialize_shell(void);
-void getInput(char buf[100]);
-void printDir(void);
-void echo(char buf[100]);
-void execute_command(char *args[]);
-```
-
-### utilities.c
-
-```c
-#include "utilities.h"
-
-void execute_command(char *args[]) {
-    pid_t pid = fork();
-
-    if (pid == -1) {
-        perror("fork");
-    } else if (pid == 0) {
-        // Child process
-        execvp(args[0], args);
-        perror("execvp"); // If execvp fails
-        exit(EXIT_FAILURE);
-    } else {
-        // Parent process
-        int status;
-        waitpid(pid, &status, 0);
-    }
-}
-```
-
-### main.c
-
-```c
-#include "utilities.h"
-
-int argc = 0;
-char buf[100];
-
-int main() {
-    initialize_shell();
-
-    while (1) {
-        printf("\nAhmedfandes shell>>> ");
-        fgets(buf, 100, stdin);
-        int len = strlen(buf);
-        buf[len - 1] = 0;
-        getInput(buf);
-
-        if (strcmp(argv[0], "exit") == 0) {
-            printf("Good bye :)\n$");
-            break; // breaking the shell
-        } else if (strcmp(argv[0], "cd") == 0) {
-            chdir(argv[1]);
-        } else if (strcmp(argv[0], "cp") == 0) {
-            // ... (copy functionality)
-        } else if (strcmp(argv[0], "mv") == 0) {
-            // ... (move functionality)
-        } else if (strcmp(argv[0], "echo") == 0) {
-            // ... (echo functionality)
-        } else if (strcmp(argv[0], "pwd") == 0) {
-            printDir();
-        } else {
-            execute_command(argv);
-        }
-    }
-}
-```
-
-## How to Use
-
-1. Clone the repository or download the files.
-2. Compile the code using a C compiler (e.g., `gcc`).
-3. Run the compiled executable.
+Welcome to Pico Shell! Pico Shell is a minimalistic shell implementation with built-in commands and support for memory allocation and redirection. It is designed to provide a lightweight and efficient command-line interface.
 
 ## Features
 
-- Basic shell commands: `cd`, `cp`, `mv`, `echo`, `pwd`, and `exit`.
-- Executes external commands using `execvp`.
-- Supports basic input/output redirection.
+- **Built-in Commands**: Pico Shell includes several built-in commands for common file system operations and environment management. These commands include:
+  - `ls`: List directory contents.
+  - `cp`: Copy files and directories.
+  - `cd`: Change the current directory.
+  - `mv`: Move or rename files and directories.
+  - `echo`: Display a line of text.
+  - `pwd`: Print the current working directory.
+  - `set`: Set environment variables.
+  - `unset`: Unset environment variables.
+  - `env`: Display or modify environment variables.
+  - `mkdir`: Create directories.
+  - `rm`: Remove files or directories.
+  
+- **Memory Allocation**: Pico Shell supports memory allocation, enabling efficient handling of system resources and reducing memory leaks.
+
+- **Redirection**: Pico Shell supports input and output redirection, allowing users to control where the input comes from and where the output goes.
+
+## Implementation Details
+
+All built-in commands are implemented in `utilities.h`, providing a simple and efficient way to perform common tasks within the shell.
+
+## Usage
+
+To use Pico Shell, simply compile the source code and run the executable. Once launched, you can use the built-in commands as described above. 
+
+Here's a basic example:
+
+```bash
+$ ./picoshell
+Pico Shell started.
+$ ls
+file1.txt file2.txt directory
+$ cp file1.txt file3.txt
+$ ls
+file1.txt file2.txt file3.txt directory
+$ cd directory
+$ pwd
+/home/user/directory
+```
+
+## Dependencies
+
+Pico Shell has minimal dependencies and should run on most Unix-like systems.
