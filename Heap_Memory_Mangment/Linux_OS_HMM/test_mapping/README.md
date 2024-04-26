@@ -30,5 +30,7 @@ Running the program reveals the following:
 
 While `getrusage(2)` offers insights into minor and major page faults, a complete picture requires a detailed memory map of the process. 
 
+![Benwafdy  Running  - Oracle VM VirtualBox 4_26_2024 4_48_35 AM](https://github.com/AhmedAdelWafdy7/ST-training/assets/107740350/13b7ce4f-0154-4c90-ab1f-98538921aecd)
+
 This repository does not currently include a tool for generating a memory map, but it provides a foundation for further exploration of this concept. 
 
